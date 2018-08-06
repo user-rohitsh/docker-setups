@@ -1,0 +1,10 @@
+FROM openjdk:8
+# disable interactive functions
+ENV DEBIAN_FRONTEND noninteractive
+RUN wget http://www-eu.apache.org/dist/kafka/2.0.0/kafka_2.11-2.0.0.tgz && \
+	tar -xzf kafka_2.11-2.0.0.tgz && \
+	chmod +x kafka_2.11-2.0.0
+RUN mv kafka_2.11-2.0.0 /opt/
+ENV KAFKA_HOME=/opt/kafka_2.11-2.0.0
+ENV PATH="${PATH}:$KAFKA_HOME/bin"
+EXPOSE 2181

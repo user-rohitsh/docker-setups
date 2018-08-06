@@ -1,0 +1,67 @@
+version: "3.3"
+services:
+    zookeeper:
+        networks:
+            - my_net
+        build:
+            context: .
+            dockerfile: zookeeper.df
+        image: zookeeper:1
+        ports:
+            - "2181:2181"
+        volumes:
+            - /c/Users/rohit_000/dev/workspace/tmp:/tmp
+        entrypoint: "/opt/kafka_2.11-2.0.0/bin/zookeeper-server-start.sh /opt/kafka_2.11-2.0.0/config/zookeeper.properties"
+        
+    kafka_node1:
+        networks: 
+            - my_net
+        build:
+            context: .
+            dockerfile: kafka_node.df
+        image: kafka_node1:1
+        ports:
+            - "9091:9091"
+        volumes:
+            - /c/Users/rohit_000/dev/workspace/tmp:/tmp
+        entrypoint: "/opt/kafka_2.11-2.0.0/bin/kafka-server-start.sh /opt/kafka_2.11-2.0.0/config/kafka_node1.properties"
+  
+    kafka_node2:
+        networks: 
+            - my_net
+        build:
+            context: .
+            dockerfile: kafka_node.df
+        image: kafka_node2:1
+        ports:
+            - "9092:9092"
+        volumes:
+            - /c/Users/rohit_000/dev/workspace/tmp:/tmp            
+        entrypoint: "/opt/kafka_2.11-2.0.0/bin/kafka-server-start.sh /opt/kafka_2.11-2.0.0/config/kafka_node2.properties"
+
+    kafka_node3:
+        networks: 
+            - my_net
+        build:
+            context: .
+            dockerfile: kafka_node.df
+        image: kafka_node3:1
+        ports:
+            - "9093:9093"
+        volumes:
+            - /c/Users/rohit_000/dev/workspace/tmp:/tmp            
+        entrypoint: "/opt/kafka_2.11-2.0.0/bin/kafka-server-start.sh /opt/kafka_2.11-2.0.0/config/kafka_node3.properties"
+    
+    dev:
+        networks:
+            - my_net
+        build:
+            context: .
+            dockerfile: kafka_node.df
+        image: kafka_dev:1
+        volumes:
+            - /c/Users/rohit_000/dev/workspace/tmp:/tmp            
+        
+networks:
+    my_net:
+        driver: bridge
